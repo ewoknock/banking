@@ -1,8 +1,7 @@
 import HeaderBox from '@/components/ui/HeaderBox'
 import { Pagination } from '@/components/ui/Pagination'
 import TransactionsTable from '@/components/ui/TransactionsTable'
-import { getAccount, getAccounts } from '@/lib/actions/bank.actions'
-import { getLoggedInUser } from '@/lib/actions/user.actions'
+import { useAccount, useUser } from '@/lib/actions/user.actions'
 import { formatAmount } from '@/lib/utils'
 import React from 'react'
 
@@ -10,19 +9,17 @@ const TransactionHistory = async ({
   searchParams: { id, page },
 }: SearchParamProps) => {
   const currentPage = Number(page as string) || 1
-  const loggedIn = await getLoggedInUser()
-  const accounts = await getAccounts({ userId: loggedIn.$id })
+  const { loggedIn, accounts } = await useUser()
+
+  if (!accounts) return
+  const { accountsData, appwriteItemId, account } = await useAccount(
+    id,
+    accounts
+  )
   const rowsPerPage = 10
 
   const indexOfLastTransaction = currentPage * rowsPerPage
   const indexOfFirstTransaction = indexOfLastTransaction - rowsPerPage
-
-  if (!accounts) return
-
-  const accountsData = accounts?.data
-  const appwriteItemId = (id as string) || accountsData[0]?.appwriteItemId
-
-  const account = await getAccount({ appwriteItemId })
 
   const currentTransactions = account?.transactions.slice(
     indexOfFirstTransaction,

@@ -1,12 +1,14 @@
 import BankCard from '@/components/ui/BankCard'
 import HeaderBox from '@/components/ui/HeaderBox'
 import { getAccounts } from '@/lib/actions/bank.actions'
-import { getLoggedInUser } from '@/lib/actions/user.actions'
+import { getLoggedInUser, useUser } from '@/lib/actions/user.actions'
 import React from 'react'
 
 const MyBanks = async () => {
-  const loggedIn = await getLoggedInUser()
-  const accounts = await getAccounts({ userId: loggedIn.$id })
+  // const loggedIn = await getLoggedInUser()
+  // const accounts = await getAccounts({ userId: loggedIn.$id })
+  const { loggedIn, accounts } = await useUser()
+
   return (
     <section className='flex'>
       <div className='my-banks'>

@@ -1,22 +1,24 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import HeaderBox from '@/components/ui/HeaderBox'
 import TotalBalanceBox from '@/components/ui/TotalBalanceBox'
 import RightSidebar from '@/components/ui/RightSidebar'
-import { getLoggedInUser } from '@/lib/actions/user.actions'
+import {
+  getLoggedInUser,
+  useAccount,
+  useUser,
+} from '@/lib/actions/user.actions'
 import { getAccounts, getAccount } from '@/lib/actions/bank.actions'
 import RecentTransactions from '@/components/ui/RecentTransactions'
 
 const Home = async ({ searchParams: { id, page } }: SearchParamProps) => {
   const currentPage = Number(page as string) || 1
-  const loggedIn = await getLoggedInUser()
-  const accounts = await getAccounts({ userId: loggedIn.$id })
+  const { loggedIn, accounts } = await useUser()
 
   if (!accounts) return
-
-  const accountsData = accounts?.data
-  const appwriteItemId = (id as string) || accountsData[0]?.appwriteItemId
-
-  const account = await getAccount({ appwriteItemId })
+  const { accountsData, appwriteItemId, account } = await useAccount(
+    id,
+    accounts
+  )
 
   return (
     <section className='home'>
@@ -44,7 +46,7 @@ const Home = async ({ searchParams: { id, page } }: SearchParamProps) => {
       </div>
       <RightSidebar
         user={loggedIn}
-        transactions={account.transactions}
+        transactions={account?.transactions}
         banks={accountsData?.slice(0, 2)}
       />
     </section>

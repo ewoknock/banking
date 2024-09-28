@@ -8,6 +8,7 @@ import { CountryCode, ProcessorTokenCreateRequest, ProcessorTokenCreateRequestPr
 import { plaidClient } from "../plaid"
 import { revalidatePath } from "next/cache"
 import { addFundingSource, createDwollaCustomer } from "./dwolla.actions"
+import { getAccount, getAccounts } from "./bank.actions"
 
 const { 
   APPWRITE_DATABASE_ID: DATABASE_ID,
@@ -273,9 +274,25 @@ export const getBank = async ({
      )
     
      if(bank.total !== 1) return null
-     
+
      return parseStringify(bank.documents[0]);
    }catch(error){
      console.log(error)
    }
  }
+
+export const useUser = async () => {
+  const loggedIn = await getLoggedInUser()
+  const accounts = await getAccounts({ userId: loggedIn.$id })
+
+
+  return {loggedIn, accounts}
+}
+
+export const useAccount = async(id: string | string[] | undefined, accounts:any) => {
+  const accountsData = accounts?.data
+  const appwriteItemId = (id as string) || accountsData[0]?.appwriteItemId
+
+  const account = await getAccount({ appwriteItemId })
+  return {accountsData, appwriteItemId, account}
+}
