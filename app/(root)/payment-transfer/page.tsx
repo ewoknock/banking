@@ -1,11 +1,6 @@
 import HeaderBox from '@/components/ui/HeaderBox'
 import PaymentTransferForm from '@/components/ui/PaymentTransferForm'
-import { getAccounts } from '@/lib/actions/bank.actions'
-import {
-  getLoggedInUser,
-  useAccount,
-  useUser,
-} from '@/lib/actions/user.actions'
+import { useAccount, useUser } from '@/lib/actions/user.actions'
 import React from 'react'
 
 const Transfer = async () => {

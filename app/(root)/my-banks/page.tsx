@@ -1,7 +1,6 @@
 import BankCard from '@/components/ui/BankCard'
 import HeaderBox from '@/components/ui/HeaderBox'
-import { getAccounts } from '@/lib/actions/bank.actions'
-import { getLoggedInUser, useUser } from '@/lib/actions/user.actions'
+import { useUser } from '@/lib/actions/user.actions'
 import React from 'react'
 
 const MyBanks = async () => {

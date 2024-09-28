@@ -3,9 +3,6 @@ import { type ClassValue, clsx } from "clsx";
 import qs from "query-string";
 import { twMerge } from "tailwind-merge";
 import { z } from "zod";
-import { getLoggedInUser } from "./actions/user.actions";
-import { getAccount, getAccounts } from "./actions/bank.actions";
-import { useEffect, useState } from "react";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));

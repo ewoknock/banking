@@ -8,7 +8,7 @@ const Category = ({ category }: CategoryProps) => {
   const {
     bg,
     circleBg,
-    text: { main, count },
+    text: { main },
     progress: { bg: progressBg, indicator },
     icon,
   } = topCategoryStyles[category.name as keyof typeof topCategoryStyles] ||

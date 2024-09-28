@@ -1,13 +1,7 @@
-import React, { useEffect, useState } from 'react'
 import HeaderBox from '@/components/ui/HeaderBox'
 import TotalBalanceBox from '@/components/ui/TotalBalanceBox'
 import RightSidebar from '@/components/ui/RightSidebar'
-import {
-  getLoggedInUser,
-  useAccount,
-  useUser,
-} from '@/lib/actions/user.actions'
-import { getAccounts, getAccount } from '@/lib/actions/bank.actions'
+import { useAccount, useUser } from '@/lib/actions/user.actions'
 import RecentTransactions from '@/components/ui/RecentTransactions'
 
 const Home = async ({ searchParams: { id, page } }: SearchParamProps) => {
